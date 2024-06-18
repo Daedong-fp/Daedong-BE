@@ -15,27 +15,25 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/{id}")
-    public ResponseEntity<PostResponseDto> createPost(PostRequestDto postRequestDto) {
-        PostResponseDto createdPost = postService.createPost(postRequestDto);
-        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+    @PostMapping()
+    public void createPost(@RequestBody PostRequestDto postRequestDto) {
+        postService.createPost(postRequestDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
-        PostResponseDto post = postService.getPost(id);
-        return ResponseEntity.ok(post);
+    public PostResponseDto getPost(@PathVariable Long id) {
+        return postService.getPost(id);
     }
 
-    @PutMapping("/{id}") // putmapping patchmapping 차이점 알아보기
-    public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long id, PostRequestDto postRequestDto) {
-        PostResponseDto updatedPost = postService.updatePost(id, postRequestDto);
-        return ResponseEntity.ok(updatedPost);
+    @PatchMapping("/{id}")
+    public void updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
+        postService.updatePost(id, postRequestDto);
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+    public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);
-        return ResponseEntity.noContent().build();
+
     }
 }
